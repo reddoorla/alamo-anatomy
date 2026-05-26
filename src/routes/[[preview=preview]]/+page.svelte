@@ -15,18 +15,18 @@
 
 <section class="bg-dark lg:min-h-[60vh]">
   <ContentWidth
-    class="h-full lg:min-h-[60vh] flex flex-col justify-start items-start lg:items-end pt-32 pb-24 lg:pt-48 lg:pb-60 text-light text-left relative"
+    class="h-full lg:min-h-[60vh] flex flex-col justify-start items-start lg:items-end pt-72 pb-8 lg:pt-48 lg:pb-60 text-light text-left relative"
   >
 
-  <img src={mark} alt="AATI" class="top-16 left-0 absolute w-24 h-24 md:w-40 md:h-40 opacity-8  "/>
+  <img src={mark} alt="AATI" class="top-16 left-0 absolute w-40 h-40 opacity-8"/>
 
     <img
       src={logo}
       alt="Alamo Anatomy Training Institute"
-      class="lg:absolute bottom-0 left-0 w-full lg:w-3/4"
+      class="w-44 lg:absolute lg:bottom-0 lg:left-0 lg:w-3/4"
     />
 
-    <div class="w-full lg:w-1/3 mt-16 lg:mt-0">
+    <div class="w-72 lg:w-1/3 mt-6 lg:mt-0">
       <PrismicRichText field={d.s1_subtitle} />
 
       {#if d.s1_button?.text}
