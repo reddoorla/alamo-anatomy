@@ -30,7 +30,7 @@
       <PrismicRichText field={d.s1_subtitle} />
 
       {#if d.s1_button?.text}
-        <DefaultButton href={asLink(d.s1_button) ?? ""} class="mt-10">
+        <DefaultButton href={asLink(d.s1_button) ?? ""} class="mt-6">
           {d.s1_button.text}
         </DefaultButton>
       {/if}
