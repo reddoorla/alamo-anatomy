@@ -45,10 +45,13 @@
           <legend><h4 class="mb-4">Event Details</h4></legend>
           <div class="flex flex-col sm:flex-row gap-5">
             <div class="flex-1 min-w-0">
-            
               <div class="relative">
-              {#if !startDate}
-                <label for="preferred_start_date" class="sm:hidden block absolute top-1/2 -translate-y-1/2 text-xs left-3.5 uppercase tracking-wider text-dark/60 z-10">Preferred Start Date*</label>
+                {#if !startDate}
+                  <label
+                    for="preferred_start_date"
+                    class="sm:hidden block absolute top-1/2 -translate-y-1/2 text-xs left-3.5 uppercase tracking-wider text-dark/60 z-10"
+                    >Preferred Start Date*</label
+                  >
                 {/if}
                 <input
                   id="preferred_start_date"
@@ -61,7 +64,16 @@
                   use:datepicker
                   class={inputClass}
                 />
-                <svg class="sm:hidden absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-5 h-5 text-dark/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg
+                  class="sm:hidden absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-5 h-5 text-dark/40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <rect x="3" y="4" width="18" height="18" rx="2" />
                   <line x1="16" y1="2" x2="16" y2="6" />
                   <line x1="8" y1="2" x2="8" y2="6" />
@@ -70,10 +82,13 @@
               </div>
             </div>
             <div class="flex-1 min-w-0">
-
               <div class="relative">
-              {#if !endDate}
-                <label for="preferred_end_date" class="sm:hidden block absolute top-1/2 -translate-y-1/2 text-xs left-3.5 uppercase tracking-wider text-dark/60 z-10">Preferred End Date*</label>
+                {#if !endDate}
+                  <label
+                    for="preferred_end_date"
+                    class="sm:hidden block absolute top-1/2 -translate-y-1/2 text-xs left-3.5 uppercase tracking-wider text-dark/60 z-10"
+                    >Preferred End Date*</label
+                  >
                 {/if}
                 <input
                   id="preferred_end_date"
@@ -86,7 +101,16 @@
                   use:datepicker={{ minDate: startDate || "today" }}
                   class={inputClass}
                 />
-                <svg class="sm:hidden absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-5 h-5 text-dark/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg
+                  class="sm:hidden absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-5 h-5 text-dark/40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <rect x="3" y="4" width="18" height="18" rx="2" />
                   <line x1="16" y1="2" x2="16" y2="6" />
                   <line x1="8" y1="2" x2="8" y2="6" />
@@ -96,39 +120,99 @@
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="number" name="number_of_stations" placeholder="Number of Stations*" aria-label="Number of Stations" required min="1" class={inputClass} />
-            <input type="text" name="time_slots" placeholder="Time Slots*" aria-label="Time Slots" required class={inputClass} />
+            <input
+              type="number"
+              name="number_of_stations"
+              placeholder="Number of Stations*"
+              aria-label="Number of Stations"
+              required
+              min="1"
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="time_slots"
+              placeholder="Time Slots*"
+              aria-label="Time Slots"
+              required
+              class={inputClass}
+            />
           </div>
-          <input type="number" name="estimated_attendees" placeholder="Estimated Number of Attendees*" aria-label="Estimated Number of Attendees" required min="1" class={inputClass} />
-          <textarea name="event_description" placeholder="Description of Event*" aria-label="Description of Event" required rows="6" class={textareaClass}></textarea>
+          <input
+            type="number"
+            name="estimated_attendees"
+            placeholder="Estimated Number of Attendees*"
+            aria-label="Estimated Number of Attendees"
+            required
+            min="1"
+            class={inputClass}
+          />
+          <textarea
+            name="event_description"
+            placeholder="Description of Event*"
+            aria-label="Description of Event"
+            required
+            rows="6"
+            class={textareaClass}
+          ></textarea>
         </fieldset>
 
         <!-- Lab Equipment -->
         <fieldset class="flex flex-col gap-5">
           <legend><h4 class="mb-4">Lab Equipment</h4></legend>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="c_arm_needed" placeholder="C-Arm Needed*" aria-label="C-Arm Needed" required class={inputClass} />
-            <input type="text" name="drills_needed" placeholder="Drills Needed?*" aria-label="Drills Needed" required class={inputClass} />
+            <input
+              type="text"
+              name="c_arm_needed"
+              placeholder="C-Arm Needed*"
+              aria-label="C-Arm Needed"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="drills_needed"
+              placeholder="Drills Needed?*"
+              aria-label="Drills Needed"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="arthroscope_needed" placeholder="Arthroscope Needed?*" aria-label="Arthroscope Needed" required class={inputClass} />
-            <input type="text" name="tissue_type" placeholder="Type of Tissue Needed*" aria-label="Type of Tissue Needed" required class={inputClass} />
+            <input
+              type="text"
+              name="arthroscope_needed"
+              placeholder="Arthroscope Needed?*"
+              aria-label="Arthroscope Needed"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="tissue_type"
+              placeholder="Type of Tissue Needed*"
+              aria-label="Type of Tissue Needed"
+              required
+              class={inputClass}
+            />
           </div>
-          <textarea name="procedure_description" placeholder="Description of Procedure*" aria-label="Description of Procedure" required rows="6" class={textareaClass}></textarea>
+          <textarea
+            name="procedure_description"
+            placeholder="Description of Procedure*"
+            aria-label="Description of Procedure"
+            required
+            rows="6"
+            class={textareaClass}
+          ></textarea>
         </fieldset>
 
         <!-- Catering -->
         <fieldset class="flex flex-col gap-5">
           <legend><h4 class="mb-4">Catering</h4></legend>
           <div class="flex flex-col gap-2">
-            {#each ["Breakfast", "Lunch", "Dinner", "Snacks", "None"] as meal}
+            {#each ["Breakfast", "Lunch", "Dinner", "Snacks", "None"] as meal (meal)}
               <label class="group flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="catering"
-                  value={meal}
-                  class="peer sr-only"
-                />
+                <input type="checkbox" name="catering" value={meal} class="peer sr-only" />
                 <span
                   class="size-4 border border-dark rounded-xs inline-block shrink-0 transition-colors duration-100 group-hover:bg-dark/10 peer-checked:bg-dark peer-focus-visible:ring-2 peer-focus-visible:ring-dark/30"
                 ></span>
@@ -136,36 +220,132 @@
               </label>
             {/each}
           </div>
-          <textarea name="additional_catering_info" placeholder="Additional Catering Info" aria-label="Additional Catering Info" rows="5" class={textareaClass}></textarea>
-          <textarea name="diet_accommodations" placeholder="Diet Accommodation Requests" aria-label="Diet Accommodation Requests" rows="5" class={textareaClass}></textarea>
+          <textarea
+            name="additional_catering_info"
+            placeholder="Additional Catering Info"
+            aria-label="Additional Catering Info"
+            rows="5"
+            class={textareaClass}
+          ></textarea>
+          <textarea
+            name="diet_accommodations"
+            placeholder="Diet Accommodation Requests"
+            aria-label="Diet Accommodation Requests"
+            rows="5"
+            class={textareaClass}
+          ></textarea>
         </fieldset>
 
         <!-- Lab Requestor Information -->
         <fieldset class="flex flex-col gap-5">
           <legend><h4 class="mb-4">Lab Requestor Information</h4></legend>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="main_contact_name" placeholder="Main Contact Name*" aria-label="Main Contact Name" required class={inputClass} />
-            <input type="text" name="requestor_company" placeholder="Requestor Company*" aria-label="Requestor Company" required class={inputClass} />
+            <input
+              type="text"
+              name="main_contact_name"
+              placeholder="Main Contact Name*"
+              aria-label="Main Contact Name"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="requestor_company"
+              placeholder="Requestor Company*"
+              aria-label="Requestor Company"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="email" name="requestor_email" placeholder="Requestor Email*" aria-label="Requestor Email" required class={inputClass} />
-            <input type="tel" name="requestor_phone" placeholder="Requestor Phone*" aria-label="Requestor Phone" required class={inputClass} />
+            <input
+              type="email"
+              name="requestor_email"
+              placeholder="Requestor Email*"
+              aria-label="Requestor Email"
+              required
+              class={inputClass}
+            />
+            <input
+              type="tel"
+              name="requestor_phone"
+              placeholder="Requestor Phone*"
+              aria-label="Requestor Phone"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="day_of_contact" placeholder="Contact the Day of Lab*" aria-label="Contact the Day of Lab" required class={inputClass} />
-            <input type="text" name="ap_contact_name" placeholder="Accounts Payable Contact Name*" aria-label="Accounts Payable Contact Name" required class={inputClass} />
+            <input
+              type="text"
+              name="day_of_contact"
+              placeholder="Contact the Day of Lab*"
+              aria-label="Contact the Day of Lab"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="ap_contact_name"
+              placeholder="Accounts Payable Contact Name*"
+              aria-label="Accounts Payable Contact Name"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="tel" name="ap_contact_phone" placeholder="AP Contact Phone #*" aria-label="AP Contact Phone Number" required class={inputClass} />
-            <input type="email" name="ap_contact_email" placeholder="AP Contact Email*" aria-label="AP Contact Email" required class={inputClass} />
+            <input
+              type="tel"
+              name="ap_contact_phone"
+              placeholder="AP Contact Phone #*"
+              aria-label="AP Contact Phone Number"
+              required
+              class={inputClass}
+            />
+            <input
+              type="email"
+              name="ap_contact_email"
+              placeholder="AP Contact Email*"
+              aria-label="AP Contact Email"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="billing_street" placeholder="Billing Street Address*" aria-label="Billing Street Address" required class={inputClass} />
-            <input type="text" name="billing_city" placeholder="Billing City*" aria-label="Billing City" required class={inputClass} />
+            <input
+              type="text"
+              name="billing_street"
+              placeholder="Billing Street Address*"
+              aria-label="Billing Street Address"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="billing_city"
+              placeholder="Billing City*"
+              aria-label="Billing City"
+              required
+              class={inputClass}
+            />
           </div>
           <div class="flex flex-col sm:flex-row gap-5">
-            <input type="text" name="billing_state" placeholder="Billing State*" aria-label="Billing State" required class={inputClass} />
-            <input type="text" name="billing_zip" placeholder="Billing Zip Code*" aria-label="Billing Zip Code" required class={inputClass} />
+            <input
+              type="text"
+              name="billing_state"
+              placeholder="Billing State*"
+              aria-label="Billing State"
+              required
+              class={inputClass}
+            />
+            <input
+              type="text"
+              name="billing_zip"
+              placeholder="Billing Zip Code*"
+              aria-label="Billing Zip Code"
+              required
+              class={inputClass}
+            />
           </div>
         </fieldset>
 

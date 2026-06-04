@@ -22,7 +22,7 @@
   $effect(() => {
     const el = thumbButtons[activeIndex];
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
   });
 
@@ -47,11 +47,7 @@
 </section>
 
 <!-- Section 2: Masthead media -->
-<ScreenWidthMedia
-  vimeoId={d.s2_vimeo_id ?? ""}
-  field={d.s2_image}
-  percentHeight={50}
-/>
+<ScreenWidthMedia vimeoId={d.s2_vimeo_id ?? ""} field={d.s2_image} percentHeight={50} />
 
 <!-- Section 3: Carousel + body -->
 <section class="bg-light py-20 lg:py-28">
@@ -59,10 +55,13 @@
     <div class="w-full lg:w-7/12">
       {#if images.length}
         <div class="w-full aspect-4/3 overflow-hidden rounded mb-5 bg-[#B0D6D4] relative">
-          {#each images as img, i}
+          {#each images as img, i (i)}
             <PrismicImage
               field={img.image}
-              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out {activeIndex === i ? 'opacity-100' : 'opacity-0'}"
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out {activeIndex ===
+              i
+                ? 'opacity-100'
+                : 'opacity-0'}"
             />
           {/each}
         </div>
@@ -73,18 +72,30 @@
             aria-label="Previous image"
             class="shrink-0 w-10 h-10 rounded-full border border-dark flex items-center justify-center hover:bg-dark hover:text-light transition"
           >
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
               <path d="M15 6H1M1 6L6 1M1 6L6 11" />
             </svg>
           </button>
           <div class="flex-1 flex gap-2 overflow-x-auto no-scrollbar">
-            {#each images as img, i}
+            {#each images as img, i (i)}
               <button
                 type="button"
                 bind:this={thumbButtons[i]}
                 onclick={() => (activeIndex = i)}
                 aria-label="Show image {i + 1}"
-                class="shrink-0 w-[100px] h-[75px] overflow-hidden border-b-[3px] transition duration-300 cursor-pointer {activeIndex === i
+                class="shrink-0 w-[100px] h-[75px] overflow-hidden border-b-[3px] transition duration-300 cursor-pointer {activeIndex ===
+                i
                   ? 'border-dark saturate-100'
                   : 'border-transparent saturate-50 opacity-80 hover:saturate-100 hover:opacity-100'}"
               >
@@ -98,7 +109,18 @@
             aria-label="Next image"
             class="shrink-0 w-10 h-10 rounded-full border border-dark flex items-center justify-center hover:bg-dark hover:text-light transition"
           >
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
               <path d="M1 6H15M15 6L10 1M15 6L10 11" />
             </svg>
           </button>
@@ -122,7 +144,7 @@
 <section class="py-20 lg:py-28">
   <ContentWidth class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start justify-between">
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full lg:w-7/12">
-      {#each d.s4_boxes as box}
+      {#each d.s4_boxes as box, i (i)}
         <div
           class="flex flex-col items-center justify-center text-center gap-3 bg-light px-5 py-8 min-h-28 sm:py-10 sm:min-h-32 lg:min-h-40"
         >
@@ -148,7 +170,9 @@
 
 <!-- Section 5: Map + address -->
 <section class="pb-20 lg:pb-28">
-  <ContentWidth class="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-20 items-start justify-between">
+  <ContentWidth
+    class="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-20 items-start justify-between"
+  >
     <div class="w-full md:w-1/2 lg:w-7/12">
       {#if mapSrc}
         <div class="w-full aspect-4/3 overflow-hidden rounded bg-light">
@@ -170,7 +194,9 @@
       <div class="mb-8">
         <PrismicRichText field={d.s5_body} />
       </div>
-      <div class="bg-light p-5 [&_p:last-child]:mb-0 [&_p]:text-sm [&_p]:uppercase [&_p]:tracking-wider">
+      <div
+        class="bg-light p-5 [&_p:last-child]:mb-0 [&_p]:text-sm [&_p]:uppercase [&_p]:tracking-wider"
+      >
         <PrismicRichText field={d.s5_info} />
       </div>
     </div>

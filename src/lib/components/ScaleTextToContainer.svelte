@@ -1,98 +1,104 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-	import { onMount } from 'svelte';
+  import type { Snippet } from "svelte";
+  import { onMount } from "svelte";
 
-	interface Props {
-		children?: Snippet;
-		class?: string;
-	}
+  interface Props {
+    children?: Snippet;
+    class?: string;
+  }
 
-	let { children, class: passedClasses = '' }: Props = $props();
+  let { children, class: passedClasses = "" }: Props = $props();
 
-	let parent: HTMLElement | undefined = $state();
-	let originalFontSizes: Map<HTMLElement, number> = new Map();
-	let mounted = $state(false);
-	let windowWidth = $state(0);
+  let parent: HTMLElement | undefined = $state();
+  // Non-reactive lookup cache (node -> original px). Populated once in onMount and only
+  // read via .get() inside the effect; its mutations must NOT trigger reactivity, so a
+  // plain Map is correct here (SvelteMap would re-run the effect on every set()).
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity
+  let originalFontSizes: Map<HTMLElement, number> = new Map();
+  let mounted = $state(false);
+  let windowWidth = $state(0);
 
-	function getFontSizeInPixels(element: Element): number {
-		const computedStyle = window.getComputedStyle(element);
-		const fontSize = computedStyle.fontSize;
-		const fontSizeValue = parseFloat(fontSize);
-		const fontSizeUnit = fontSize.slice(fontSizeValue.toString().length);
+  function getFontSizeInPixels(element: Element): number {
+    const computedStyle = window.getComputedStyle(element);
+    const fontSize = computedStyle.fontSize;
+    const fontSizeValue = parseFloat(fontSize);
+    const fontSizeUnit = fontSize.slice(fontSizeValue.toString().length);
 
-		if (fontSizeUnit === 'px') {
-			return fontSizeValue;
-		} else if (fontSizeUnit === 'em' || fontSizeUnit === 'rem') {
-			const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-			return fontSizeValue * rootFontSize;
-		} else if (fontSizeUnit === '%') {
-			const parentFontSize = parseFloat(
-				getComputedStyle(element.parentElement as Element).fontSize
-			);
-			return (fontSizeValue / 100) * parentFontSize;
-		} else {
-			return 16;
-		}
-	}
+    if (fontSizeUnit === "px") {
+      return fontSizeValue;
+    } else if (fontSizeUnit === "em" || fontSizeUnit === "rem") {
+      const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      return fontSizeValue * rootFontSize;
+    } else if (fontSizeUnit === "%") {
+      const parentFontSize = parseFloat(
+        getComputedStyle(element.parentElement as Element).fontSize,
+      );
+      return (fontSizeValue / 100) * parentFontSize;
+    } else {
+      return 16;
+    }
+  }
 
-	onMount(() => {
-		mounted = true;
-		windowWidth = window.innerWidth;
+  onMount(() => {
+    mounted = true;
+    windowWidth = window.innerWidth;
 
-		// Capture original font sizes once
-		if (parent) {
-			const nodes = [...parent.children] as HTMLElement[];
-			nodes.forEach((node) => {
-				originalFontSizes.set(node, getFontSizeInPixels(node));
-			});
-		}
+    // Capture original font sizes once
+    if (parent) {
+      const nodes = [...parent.children] as HTMLElement[];
+      nodes.forEach((node) => {
+        originalFontSizes.set(node, getFontSizeInPixels(node));
+      });
+    }
 
-		let timer: ReturnType<typeof setTimeout>;
-		const handleResize = () => {
-			clearTimeout(timer);
-			timer = setTimeout(() => {
-				windowWidth = window.innerWidth;
-			}, 100);
-		};
+    let timer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        windowWidth = window.innerWidth;
+      }, 100);
+    };
 
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	});
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
 
-	$effect(() => {
-		windowWidth;
-		if (mounted && parent) {
-			const nodes = [...parent.children] as HTMLElement[];
-			const parentWidth = parent.offsetWidth;
+  $effect(() => {
+    // Read windowWidth so the effect re-runs on resize (the value itself is unused below).
+    const _trigger = windowWidth;
+    void _trigger;
+    if (mounted && parent) {
+      const nodes = [...parent.children] as HTMLElement[];
+      const parentWidth = parent.offsetWidth;
 
-			// Reset font sizes to originals before measuring
-			nodes.forEach((node) => {
-				const original = originalFontSizes.get(node);
-				if (original) {
-					node.style.fontSize = original + 'px';
-				}
-			});
+      // Reset font sizes to originals before measuring
+      nodes.forEach((node) => {
+        const original = originalFontSizes.get(node);
+        if (original) {
+          node.style.fontSize = original + "px";
+        }
+      });
 
-			let largestChildWidth = 1;
-			nodes.forEach((node) => {
-				if (node.offsetWidth > largestChildWidth) largestChildWidth = node.offsetWidth;
-			});
+      let largestChildWidth = 1;
+      nodes.forEach((node) => {
+        if (node.offsetWidth > largestChildWidth) largestChildWidth = node.offsetWidth;
+      });
 
-			const scale = parentWidth / largestChildWidth;
-			if (scale < 1) {
-				nodes.forEach((node) => {
-					const original = originalFontSizes.get(node);
-					if (original) {
-						node.style.fontSize = original * scale + 'px';
-					}
-				});
-			}
-		}
-	});
+      const scale = parentWidth / largestChildWidth;
+      if (scale < 1) {
+        nodes.forEach((node) => {
+          const original = originalFontSizes.get(node);
+          if (original) {
+            node.style.fontSize = original * scale + "px";
+          }
+        });
+      }
+    }
+  });
 </script>
 
 <div bind:this={parent} class="w-full transition-all {passedClasses}">
-	{@render children?.()}
+  {@render children?.()}
 </div>
