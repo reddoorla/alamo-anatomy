@@ -11,8 +11,7 @@
 
   let viewportWidth = $state(1024);
 
-  const baseClasses =
-    "max-w-[1220px] xl:max-w-[1440px] xl:mx-auto mx-[4%] w-[92%]";
+  const baseClasses = "max-w-[1220px] xl:max-w-[1440px] xl:mx-auto mx-[4%] w-[92%]";
   const defaultLayouts = "flex flex-col items-center justify-center relative";
 
   const edgeWidthPx = $derived.by(() => {

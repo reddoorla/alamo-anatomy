@@ -1,4 +1,3 @@
-
 /* Tailwind CSS v4 configuration */
 @import "tailwindcss";
 @import "flatpickr/dist/flatpickr.min.css";
@@ -9,22 +8,22 @@
   --screen-md: 768px;
   --screen-lg: 1024px;
   --screen-xl: 1340px;
-  
+
   --color-transparent: transparent;
   --color-current: currentColor;
   --color-black: black;
   --color-white: white;
-  --color-background: #F1F6F7;
-  --color-light: #DDF4F3;
-  --color-primary: #144E40;
-  --color-dark: #144E40;
-  --color-secondary: #DDF4F3;
-  --color-accent: #DDF4F3;
+  --color-background: #f1f6f7;
+  --color-light: #ddf4f3;
+  --color-primary: #144e40;
+  --color-dark: #144e40;
+  --color-secondary: #ddf4f3;
+  --color-accent: #ddf4f3;
 
   --transition-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
   --transition-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --transition-fast-slow: cubic-bezier(.5, 0, 0, 1);
-  
+  --transition-fast-slow: cubic-bezier(0.5, 0, 0, 1);
+
   --height-screen-75: 75vh;
   --height-screen-50: 50vh;
   --height-screen-25: 25vh;
@@ -73,8 +72,12 @@
   font-family: inherit;
   border: 1px solid rgba(20, 78, 64, 0.08);
 }
-.flatpickr-calendar.arrowTop::before { border-bottom-color: var(--color-dark); }
-.flatpickr-calendar.arrowTop::after { border-bottom-color: var(--color-dark); }
+.flatpickr-calendar.arrowTop::before {
+  border-bottom-color: var(--color-dark);
+}
+.flatpickr-calendar.arrowTop::after {
+  border-bottom-color: var(--color-dark);
+}
 
 /* Header (month + year + arrows) — dark green */
 .flatpickr-months {
@@ -110,9 +113,15 @@
   font-size: 14px;
   line-height: 1.5;
 }
-.flatpickr-current-month .numInputWrapper:hover { background: rgba(255, 255, 255, 0.1); }
-.flatpickr-current-month .numInputWrapper span.arrowUp::after { border-bottom-color: var(--color-light); }
-.flatpickr-current-month .numInputWrapper span.arrowDown::after { border-top-color: var(--color-light); }
+.flatpickr-current-month .numInputWrapper:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.flatpickr-current-month .numInputWrapper span.arrowUp::after {
+  border-bottom-color: var(--color-light);
+}
+.flatpickr-current-month .numInputWrapper span.arrowDown::after {
+  border-top-color: var(--color-light);
+}
 
 .flatpickr-current-month svg {
   display: none;
@@ -134,7 +143,7 @@
   padding: 0 4px;
   cursor: pointer;
   text-indent: 0;
-  text-overflow: '';
+  text-overflow: "";
   overflow: visible;
 }
 .flatpickr-monthDropdown-months::-ms-expand {
@@ -158,13 +167,23 @@
   align-items: center;
 }
 .flatpickr-prev-month svg,
-.flatpickr-next-month svg { fill: var(--color-light); }
+.flatpickr-next-month svg {
+  fill: var(--color-light);
+}
 .flatpickr-prev-month:hover svg,
-.flatpickr-next-month:hover svg { fill: var(--color-light); opacity: 0.7; }
+.flatpickr-next-month:hover svg {
+  fill: var(--color-light);
+  opacity: 0.7;
+}
 
 /* Weekday row — dark green text on white */
-.flatpickr-weekdays { background: white; padding: 8px 0 4px; }
-.flatpickr-weekdaycontainer { display: flex; }
+.flatpickr-weekdays {
+  background: white;
+  padding: 8px 0 4px;
+}
+.flatpickr-weekdaycontainer {
+  display: flex;
+}
 span.flatpickr-weekday {
   background: white;
   color: var(--color-dark);
@@ -206,7 +225,9 @@ span.flatpickr-weekday {
   color: var(--color-light);
 }
 .flatpickr-day.prevMonthDay,
-.flatpickr-day.nextMonthDay { color: rgba(20, 78, 64, 0.3); }
+.flatpickr-day.nextMonthDay {
+  color: rgba(20, 78, 64, 0.3);
+}
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover {
   color: rgba(20, 78, 64, 0.2);
@@ -227,14 +248,13 @@ textarea::-webkit-resizer {
   );
 }
 
-@layer base{
-
-html{
+@layer base {
+  html {
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
-}
+  }
 
-body{
+  body {
     font-family: "area-normal", "helvetica", sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -244,56 +264,53 @@ body{
     overflow-x: clip;
     scrollbar-width: none !important;
     overflow-y: auto;
-    margin:0;
+    margin: 0;
     background-color: var(--color-background);
-}
+  }
 
-body::-webkit-scrollbar {
+  body::-webkit-scrollbar {
     display: none !important;
     width: 0 !important;
-}
+  }
 
-
-
-@keyframes pos-y-wiggle {
+  @keyframes pos-y-wiggle {
     0% {
-        transform: translateY(1px);
+      transform: translateY(1px);
     }
     50% {
-        transform: translateY(-1px);
+      transform: translateY(-1px);
     }
     100% {
-        transform: translateY(1px);
+      transform: translateY(1px);
     }
-}
-.bob-on-hover:hover {
+  }
+  .bob-on-hover:hover {
     animation-name: pos-y-wiggle;
     animation-play-state: running;
-}
+  }
 
-.bob-always{
-
+  .bob-always {
     animation: 1s infinite forwards pos-y-wiggle ease-out;
-}
+  }
 
-@keyframes pulse-scale {
+  @keyframes pulse-scale {
     0% {
-        transform: scale(1.01);
+      transform: scale(1.01);
     }
     50% {
-        transform: scale(0.99);
+      transform: scale(0.99);
     }
     100% {
-        transform: scale(1.01);
+      transform: scale(1.01);
     }
-}
+  }
 
-.pulse-always{
+  .pulse-always {
     animation: 1.5s infinite forwards pulse-scale ease-out;
-}
+  }
 
-
-a, button{
+  a,
+  button {
     cursor: pointer;
     font-size: 10px;
     font-style: normal;
@@ -301,76 +318,86 @@ a, button{
     line-height: 100%; /* 15px */
     letter-spacing: 1px;
     text-transform: uppercase;
-}
+  }
 
-
-
-h1{
+  h1 {
     font-size: 66px;
     line-height: 1.2em;
-}
-h2{
+  }
+  h2 {
     font-size: 38px;
     line-height: 1.26em;
-}
-h3{
+  }
+  h3 {
     font-size: 24px;
     line-height: 1.45em;
-
-}
-h4{
+  }
+  h4 {
     font-size: 14px;
     line-height: 1.8em;
     letter-spacing: 1px;
     text-transform: uppercase;
-}
-h5{
+  }
+  h5 {
     font-size: 10px;
     line-height: 1.8em;
     letter-spacing: 1px;
     text-transform: uppercase;
-}
+  }
 
-nav a{
+  nav a {
     font-size: 12px;
-}
-h6{ 
-    /* */ 
-}
-p{
+  }
+  h6 {
+    /* */
+  }
+  p {
     margin-bottom: 6px;
-}
-p:empty {
+  }
+  p:empty {
     min-height: 0.5lh;
-}
+  }
 
-@media (max-width: 768px) {
-    h1{ font-size: 48px }
-    h2{ /* */ }
-    h3{ /* */ }
-    h4{ /* */ }
-    h5{ /* */ }
-    h6{ /* */ }
-    p{ /* */ }
-}
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 48px;
+    }
+    h2 {
+      /* */
+    }
+    h3 {
+      /* */
+    }
+    h4 {
+      /* */
+    }
+    h5 {
+      /* */
+    }
+    h6 {
+      /* */
+    }
+    p {
+      /* */
+    }
+  }
 
-span{
+  span {
     display: inline-block;
-}
+  }
 
-
-	.add-noise::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-image: radial-gradient(circle, rgba(255,255,255,0.05) 0.5px, transparent 0.5px);
-		background-size: 1px 1px;
-		opacity: 0.4;
-		pointer-events: none;
-		will-change: transform;
-		filter: blur(0.5px);
-	}
+  .add-noise::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0.5px, transparent 0.5px);
+    background-size: 1px 1px;
+    opacity: 0.4;
+    pointer-events: none;
+    will-change: transform;
+    filter: blur(0.5px);
+  }
 }

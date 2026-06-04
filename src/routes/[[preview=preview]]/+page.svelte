@@ -5,7 +5,7 @@
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
   import logo from "$lib/assets/images/logos/typeLight.svg";
-  import mark from "$lib/assets/images/logos/mark.svg"
+  import mark from "$lib/assets/images/logos/mark.svg";
 
   let { data } = $props();
   const d = $derived(data.page.data);
@@ -17,8 +17,7 @@
   <ContentWidth
     class="h-full lg:min-h-[60vh] flex flex-col justify-start items-start lg:items-end pt-72 pb-8 lg:pt-48 lg:pb-60 text-light text-left relative"
   >
-
-  <img src={mark} alt="AATI" class="top-16 left-0 absolute w-40 h-40 opacity-8"/>
+    <img src={mark} alt="AATI" class="top-16 left-0 absolute w-40 h-40 opacity-8" />
 
     <img
       src={logo}
@@ -46,11 +45,9 @@
 />
 <!-- Section 3: Icon boxes + heading -->
 <section class=" py-20 lg:py-28">
-  <ContentWidth
-    class="flex flex-col lg:flex-row gap-12 lg:gap-0 items-center justify-between"
-  >
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full lg:w-7/12 ">
-      {#each d.s3_left_boxes as box}
+  <ContentWidth class="flex flex-col lg:flex-row gap-12 lg:gap-0 items-center justify-between">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full lg:w-7/12">
+      {#each d.s3_left_boxes as box, i (i)}
         <div
           class="flex flex-col items-center justify-center text-center gap-3 bg-light px-5 xl:px-7 py-10"
         >
@@ -68,10 +65,7 @@
 <!-- Mobile-only sticky image -->
 <section class="lg:hidden">
   <ContentWidth>
-    <PrismicImage
-      field={d.s4_s6_sticky_image}
-      class="w-full object-cover rounded aspect-3/4"
-    />
+    <PrismicImage field={d.s4_s6_sticky_image} class="w-full object-cover rounded aspect-3/4" />
   </ContentWidth>
 </section>
 
@@ -81,10 +75,7 @@
   <div class="hidden lg:block absolute inset-0 overflow-visible pointer-events-none">
     <ContentWidth class="h-full items-end justify-start pb-20">
       <div class="sticky top-24 w-1/3 pointer-events-auto ml-auto">
-        <PrismicImage
-          field={d.s4_s6_sticky_image}
-          class="w-full object-cover rounded aspect-3/4"
-        />
+        <PrismicImage field={d.s4_s6_sticky_image} class="w-full object-cover rounded aspect-3/4" />
       </div>
     </ContentWidth>
   </div>
@@ -110,7 +101,19 @@
         {#if d.s5_button?.text}
           <DefaultButton href={asLink(d.s5_button) ?? ""}>
             {d.s5_button.text}
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="inline-block ml-2">
+            <svg
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              class="inline-block ml-2"
+            >
               <path d="M1 6H15M15 6L10 1M15 6L10 11" />
             </svg>
           </DefaultButton>
@@ -124,7 +127,7 @@
         <h2 class="mb-4">{d.s6_heading}</h2>
         <p class="mb-12 max-w-150">{d.s6_body}</p>
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-8 w-full">
-          {#each d.s6_boxes as box}
+          {#each d.s6_boxes as box, i (i)}
             <div class="flex flex-col items-center text-center gap-3">
               <PrismicImage field={box.icon} class="w-12 h-12 object-contain" />
               <h5>{box.label}</h5>
@@ -138,5 +141,5 @@
 
 <!-- Section 7: Full-width image -->
 <section class="w-full">
-  <ScreenWidthMedia field={d.s7_image} percentHeight={60}/>
+  <ScreenWidthMedia field={d.s7_image} percentHeight={60} />
 </section>

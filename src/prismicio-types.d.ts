@@ -12,10 +12,7 @@ type PickContentRelationshipFieldData<
     | prismic.CustomTypeModelFetchGroupLevel2,
   TData extends Record<
     string,
-    | prismic.AnyRegularField
-    | prismic.GroupField
-    | prismic.NestedGroupField
-    | prismic.SliceZone
+    prismic.AnyRegularField | prismic.GroupField | prismic.NestedGroupField | prismic.SliceZone
   >,
   TLang extends string,
 > =
@@ -28,25 +25,19 @@ type PickContentRelationshipFieldData<
       TSubRelationship["customtypes"],
       TLang
     >;
-  } & // Group
-  {
+  } & {
+    // Group
     [TGroup in Extract<
       TRelationship["fields"][number],
-      | prismic.CustomTypeModelFetchGroupLevel1
-      | prismic.CustomTypeModelFetchGroupLevel2
-    > as TGroup["id"]]: TData[TGroup["id"]] extends prismic.GroupField<
-      infer TGroupData
-    >
-      ? prismic.GroupField<
-          PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
-        >
+      prismic.CustomTypeModelFetchGroupLevel1 | prismic.CustomTypeModelFetchGroupLevel2
+    > as TGroup["id"]]: TData[TGroup["id"]] extends prismic.GroupField<infer TGroupData>
+      ? prismic.GroupField<PickContentRelationshipFieldData<TGroup, TGroupData, TLang>>
       : never;
-  } & // Other fields
-  {
-    [TFieldKey in Extract<
-      TRelationship["fields"][number],
-      string
-    >]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
+  } & {
+    // Other fields
+    [TFieldKey in Extract<TRelationship["fields"][number], string>]: TFieldKey extends keyof TData
+      ? TData[TFieldKey]
+      : never;
   };
 
 type ContentRelationshipFieldWithData<
@@ -55,10 +46,7 @@ type ContentRelationshipFieldWithData<
     | readonly (prismic.CustomTypeModelFetchCustomTypeLevel2 | string)[],
   TLang extends string = string,
 > = {
-  [ID in Exclude<
-    TCustomType[number],
-    string
-  >["id"]]: prismic.ContentRelationshipField<
+  [ID in Exclude<TCustomType[number], string>["id"]]: prismic.ContentRelationshipField<
     ID,
     TLang,
     PickContentRelationshipFieldData<
@@ -156,13 +144,7 @@ interface HomeDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  s1_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s1_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * s2 vimeo id field in *Home*
@@ -272,13 +254,7 @@ interface HomeDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  s5_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s5_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * s6 heading field in *Home*
@@ -376,8 +352,11 @@ interface HomeDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HomeDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
+export type HomeDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+  Simplify<HomeDocumentData>,
+  "home",
+  Lang
+>;
 
 type PageDocumentDataSlicesSlice = never;
 
@@ -448,8 +427,11 @@ interface PageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
+  Simplify<PageDocumentData>,
+  "page",
+  Lang
+>;
 
 /**
  * Item in *About → s4 boxes*
@@ -566,13 +548,7 @@ interface AboutDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  s3_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s3_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * s4 heading field in *About*
@@ -649,13 +625,7 @@ interface AboutDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  s5_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s5_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Meta Title field in *About*
@@ -700,8 +670,11 @@ interface AboutDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type AboutDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+  Simplify<AboutDocumentData>,
+  "about",
+  Lang
+>;
 
 /**
  * Item in *Facility → s3 carousel images*
@@ -817,13 +790,7 @@ interface FacilityDocumentData {
    * - **API ID Path**: facility.s3_button
    * - **Tab**: Main
    */
-  s3_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s3_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * s4 heading field in *Facility*
@@ -850,13 +817,7 @@ interface FacilityDocumentData {
    * - **API ID Path**: facility.s4_button
    * - **Tab**: Main
    */
-  s4_button: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  s4_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * s5 map embed src URL field in *Facility*
@@ -928,8 +889,11 @@ interface FacilityDocumentData {
  * - **API ID**: `facility`
  * - **Repeatable**: `false`
  */
-export type FacilityDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<FacilityDocumentData>, "facility", Lang>;
+export type FacilityDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+  Simplify<FacilityDocumentData>,
+  "facility",
+  Lang
+>;
 
 /**
  * Content for Contact documents
@@ -1050,8 +1014,11 @@ interface ContactDocumentData {
  * - **API ID**: `contact`
  * - **Repeatable**: `false`
  */
-export type ContactDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<ContactDocumentData>, "contact", Lang>;
+export type ContactDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+  Simplify<ContactDocumentData>,
+  "contact",
+  Lang
+>;
 
 /**
  * Content for Reserve documents
@@ -1127,8 +1094,11 @@ interface ReserveDocumentData {
  * - **API ID**: `reserve`
  * - **Repeatable**: `false`
  */
-export type ReserveDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<ReserveDocumentData>, "reserve", Lang>;
+export type ReserveDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+  Simplify<ReserveDocumentData>,
+  "reserve",
+  Lang
+>;
 
 export type AllDocumentTypes =
   | HomeDocument

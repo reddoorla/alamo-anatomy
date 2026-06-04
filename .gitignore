@@ -4,3 +4,18 @@ package-lock.json
 .netlify
 build
 .env
+
+# canonical entries from @reddoorla/maintenance sync-configs
+dist/
+coverage/
+.vitest-cache/
+playwright-report/
+test-results/
+.lighthouseci/
+.tsbuildinfo
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vercel/
+.reddoor-a11y/

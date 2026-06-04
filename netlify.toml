@@ -2,6 +2,10 @@
     command = "pnpm run build"
     publish = "build/"
 
+[build.environment]
+    NODE_VERSION = "22"
+    COREPACK_INTEGRITY_KEYS = "0"
+
 [[headers]]
     for = "/favicon.png"
     [headers.values]

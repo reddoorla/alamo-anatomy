@@ -1,18 +1,7 @@
-import adapter from '@sveltejs/adapter-netlify';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { createSvelteConfig } from "@reddoorla/maintenance/configs/svelte";
+import adapter from "@sveltejs/adapter-netlify";
 
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
-	compilerOptions: {
-		warningFilter: (warning) => warning.code !== 'element_invalid_self_closing_tag'
-	},
-	kit: {
-		adapter: adapter(),
-		prerender: {
-			handleHttpError: 'warn'
-		}
-	},
-	preprocess: vitePreprocess(),
-};
-
-export default config;
+export default createSvelteConfig({
+  kit: { adapter: adapter({ edge: false, split: false }) },
+});

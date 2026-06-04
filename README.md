@@ -44,16 +44,16 @@ This library grows as new interactive functions or layouts are needed, allowing 
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start dev server + Slice Machine |
-| `pnpm build` | Production build |
-| `pnpm preview` | Preview production build |
-| `pnpm check` | Svelte type checking |
-| `pnpm lint` | Lint with ESLint + Prettier |
-| `pnpm format` | Auto-format with Prettier |
-| `pnpm test` | Run tests with Vitest |
-| `pnpm slicemachine` | Start Slice Machine UI |
+| Command             | Description                      |
+| ------------------- | -------------------------------- |
+| `pnpm dev`          | Start dev server + Slice Machine |
+| `pnpm build`        | Production build                 |
+| `pnpm preview`      | Preview production build         |
+| `pnpm check`        | Svelte type checking             |
+| `pnpm lint`         | Lint with ESLint + Prettier      |
+| `pnpm format`       | Auto-format with Prettier        |
+| `pnpm test`         | Run tests with Vitest            |
+| `pnpm slicemachine` | Start Slice Machine UI           |
 
 ## Project Structure
 
