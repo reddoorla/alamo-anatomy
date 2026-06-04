@@ -13,7 +13,8 @@
     <h4 class="opacity-80">Message Received</h4>
     <h1>Thanks — we'll be in touch soon.</h1>
     <p class="max-w-150 text-base opacity-90">
-      Your message has been received by the AATI team. We'll follow up shortly. In the meantime, feel free to explore the rest of the site.
+      Your message has been received by the AATI team. We'll follow up shortly. In the meantime,
+      feel free to explore the rest of the site.
     </p>
     <div class="flex flex-wrap gap-4 mt-4">
       <DefaultButton href="/">Back to Home</DefaultButton>

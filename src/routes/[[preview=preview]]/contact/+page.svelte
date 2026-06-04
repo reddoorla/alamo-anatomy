@@ -48,12 +48,46 @@
         </p>
 
         <div class="flex flex-col sm:flex-row gap-5">
-          <input type="text" name="first_name" placeholder="First Name*" aria-label="First Name" required class={inputClass} />
-          <input type="text" name="last_name" placeholder="Last Name*" aria-label="Last Name" required class={inputClass} />
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name*"
+            aria-label="First Name"
+            required
+            class={inputClass}
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name*"
+            aria-label="Last Name"
+            required
+            class={inputClass}
+          />
         </div>
-        <input type="email" name="email" placeholder="Email*" aria-label="Email" required class={inputClass} />
-        <input type="tel" name="phone" placeholder="Phone*" aria-label="Phone" required class={inputClass} />
-        <textarea name="message" placeholder="Comments or Questions" aria-label="Comments or Questions" rows="6" class={textareaClass}></textarea>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email*"
+          aria-label="Email"
+          required
+          class={inputClass}
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone*"
+          aria-label="Phone"
+          required
+          class={inputClass}
+        />
+        <textarea
+          name="message"
+          placeholder="Comments or Questions"
+          aria-label="Comments or Questions"
+          rows="6"
+          class={textareaClass}
+        ></textarea>
 
         <div>
           <DefaultButton>
@@ -67,7 +101,9 @@
 
 <!-- Section 2: Map + address -->
 <section class="py-20 lg:py-28">
-  <ContentWidth class="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-20 items-start justify-between">
+  <ContentWidth
+    class="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-20 items-start justify-between"
+  >
     <div class="w-full md:w-1/2 lg:w-7/12">
       {#if mapSrc}
         <div class="w-full aspect-4/3 overflow-hidden rounded bg-light">
@@ -89,7 +125,9 @@
       <div class="mb-8">
         <PrismicRichText field={d.s2_body} />
       </div>
-      <div class="bg-light p-5 [&_p:last-child]:mb-0 [&_p]:text-sm [&_p]:uppercase [&_p]:tracking-wider">
+      <div
+        class="bg-light p-5 [&_p:last-child]:mb-0 [&_p]:text-sm [&_p]:uppercase [&_p]:tracking-wider"
+      >
         <PrismicRichText field={d.s2_info} />
       </div>
     </div>
