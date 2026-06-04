@@ -28,7 +28,7 @@
         >
         <a href="/contact" class="hover:opacity-70 transition">Contact Us</a>
       </nav>
-      <p class="text-xs opacity-60 mt-6">
+      <p class="text-xs opacity-80 mt-6">
         &copy; {new Date().getFullYear()} Alamo Anatomy Training Institute.<br />All Rights
         Reserved.
       </p>
