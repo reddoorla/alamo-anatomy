@@ -4,6 +4,7 @@ import { createIngestAction } from "@reddoorla/maintenance/forms";
 import { createClient } from "$lib/prismicio";
 import type { Actions } from "./$types";
 
+// Root layout sets prerender = "auto"; a form action can't run on a prerendered route.
 export const prerender = false;
 
 export async function load({ fetch, cookies }) {

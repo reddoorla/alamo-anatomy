@@ -7,6 +7,8 @@
   let { data, form } = $props();
   const d = $derived(data.page.data);
 
+  let submitting = $state(false);
+
   const inputClass =
     "flex-1 bg-white text-dark text-base placeholder:text-[#70A19E] placeholder:opacity-60 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider rounded-sm p-4 outline-none focus:ring-2 focus:ring-light";
   const textareaClass =
@@ -35,7 +37,17 @@
         <PrismicRichText field={d.s1_subheading} />
       </div>
 
-      <form method="POST" use:enhance class="flex flex-col gap-5">
+      <form
+        method="POST"
+        use:enhance={() => {
+          submitting = true;
+          return async ({ update }) => {
+            await update();
+            submitting = false;
+          };
+        }}
+        class="flex flex-col gap-5"
+      >
         {#if form?.error}
           <p role="alert" class="rounded-sm bg-red-50 p-4 text-red-900">{form.error}</p>
         {/if}
@@ -87,7 +99,7 @@
         ></textarea>
 
         <div>
-          <DefaultButton>
+          <DefaultButton disabled={submitting}>
             {d.s1_button_label || "Send Message"}
           </DefaultButton>
         </div>

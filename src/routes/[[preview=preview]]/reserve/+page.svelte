@@ -8,6 +8,7 @@
   let { data, form } = $props();
   const d = $derived(data.page.data);
 
+  let submitting = $state(false);
   let startDate = $state("");
   let endDate = $state("");
 
@@ -28,7 +29,17 @@
         <PrismicRichText field={d.s1_subheading} />
       </div>
 
-      <form method="POST" use:enhance class="flex flex-col gap-10">
+      <form
+        method="POST"
+        use:enhance={() => {
+          submitting = true;
+          return async ({ update }) => {
+            await update();
+            submitting = false;
+          };
+        }}
+        class="flex flex-col gap-10"
+      >
         {#if form?.error}
           <p role="alert" class="rounded-sm bg-red-50 p-4 text-red-900">{form.error}</p>
         {/if}
@@ -347,7 +358,7 @@
         </fieldset>
 
         <div>
-          <DefaultButton dark>
+          <DefaultButton dark disabled={submitting}>
             {d.s1_button_label || "Send Request"}
           </DefaultButton>
         </div>
