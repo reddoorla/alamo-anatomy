@@ -1,10 +1,13 @@
 <script lang="ts">
   import { PrismicRichText } from "@prismicio/svelte";
+  import { enhance } from "$app/forms";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
 
-  let { data } = $props();
+  let { data, form } = $props();
   const d = $derived(data.page.data);
+
+  let submitting = $state(false);
 
   const inputClass =
     "flex-1 bg-white text-dark text-base placeholder:text-[#70A19E] placeholder:opacity-60 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider rounded-sm p-4 outline-none focus:ring-2 focus:ring-light";
@@ -35,14 +38,20 @@
       </div>
 
       <form
-        name="contact"
         method="POST"
-        action="/thank-you"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
+        use:enhance={() => {
+          submitting = true;
+          return async ({ update }) => {
+            await update();
+            submitting = false;
+          };
+        }}
         class="flex flex-col gap-5"
       >
-        <input type="hidden" name="form-name" value="contact" />
+        {#if form?.error}
+          <p role="alert" class="rounded-sm bg-red-50 p-4 text-red-900">{form.error}</p>
+        {/if}
+        <input type="hidden" name="ts" value={data.formTs} />
         <p class="hidden">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
@@ -90,7 +99,7 @@
         ></textarea>
 
         <div>
-          <DefaultButton>
+          <DefaultButton disabled={submitting}>
             {d.s1_button_label || "Send Message"}
           </DefaultButton>
         </div>

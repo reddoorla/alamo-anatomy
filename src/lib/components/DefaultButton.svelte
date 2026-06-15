@@ -6,6 +6,7 @@
     onclick?: (event: MouseEvent) => void;
     filled?: boolean;
     dark?: boolean;
+    disabled?: boolean;
     class?: string;
     children?: Snippet;
   }
@@ -15,12 +16,13 @@
     onclick = () => {},
     filled = false,
     dark = false,
+    disabled = false,
     class: passedClasses = "",
     children = undefined,
   }: ButtonProps = $props();
 
   const baseClasses =
-    "inline-block active:opacity-90 rounded-full border-[1.5px] border-solid px-4 pb-3 pt-2.5 h-fit transition";
+    "inline-block active:opacity-90 rounded-full border-[1.5px] border-solid px-4 pb-3 pt-2.5 h-fit transition disabled:opacity-60 disabled:cursor-not-allowed";
 
   const variantClasses = $derived(
     filled
@@ -38,7 +40,7 @@
     {@render children?.()}
   </a>
 {:else}
-  <button {onclick} class="{baseClasses} {variantClasses} {passedClasses}">
+  <button {onclick} {disabled} class="{baseClasses} {variantClasses} {passedClasses}">
     {@render children?.()}
   </button>
 {/if}
