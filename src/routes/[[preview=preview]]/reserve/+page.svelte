@@ -1,10 +1,11 @@
 <script lang="ts">
   import { PrismicRichText } from "@prismicio/svelte";
+  import { enhance } from "$app/forms";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
   import { datepicker } from "$lib/utils/datepicker";
 
-  let { data } = $props();
+  let { data, form } = $props();
   const d = $derived(data.page.data);
 
   let startDate = $state("");
@@ -27,15 +28,11 @@
         <PrismicRichText field={d.s1_subheading} />
       </div>
 
-      <form
-        name="reserve"
-        method="POST"
-        action="/thank-you"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        class="flex flex-col gap-10"
-      >
-        <input type="hidden" name="form-name" value="reserve" />
+      <form method="POST" use:enhance class="flex flex-col gap-10">
+        {#if form?.error}
+          <p role="alert" class="rounded-sm bg-red-50 p-4 text-red-900">{form.error}</p>
+        {/if}
+        <input type="hidden" name="ts" value={data.formTs} />
         <p class="hidden">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
