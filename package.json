@@ -43,7 +43,7 @@
   "dependencies": {
     "@prismicio/client": "^7.3.1",
     "@prismicio/svelte": "^2.0.0",
-    "@reddoorla/maintenance": "^0.36.0",
+    "@reddoorla/maintenance": "^0.58.0",
     "@tailwindcss/vite": "^4.1.4",
     "@zerodevx/svelte-img": "^2.1.2",
     "flatpickr": "^4.6.13",
