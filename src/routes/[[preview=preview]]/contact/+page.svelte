@@ -1,6 +1,8 @@
 <script lang="ts">
   import { PrismicRichText } from "@prismicio/svelte";
   import { enhance } from "$app/forms";
+  import { env } from "$env/dynamic/public";
+  import { loadTurnstile } from "$lib/turnstile";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
 
@@ -8,6 +10,37 @@
   const d = $derived(data.page.data);
 
   let submitting = $state(false);
+
+  // Optional Cloudflare Turnstile — dark until PUBLIC_TURNSTILE_SITE_KEY is set;
+  // rendered explicitly (works on full load + SPA nav). createIngestAction reads
+  // the injected cf-turnstile-response input and forwards it for central verify.
+  const turnstileSiteKey = env.PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  let turnstileEl = $state<HTMLDivElement>();
+
+  $effect(() => {
+    const el = turnstileEl;
+    if (!turnstileSiteKey || !el) return;
+    let widgetId: string | undefined;
+    let cancelled = false;
+    loadTurnstile()
+      .then((turnstile) => {
+        if (cancelled || !el.isConnected) return;
+        widgetId = turnstile.render(el, { sitekey: turnstileSiteKey });
+      })
+      .catch((err) => {
+        console.warn("[turnstile] widget did not render:", err);
+      });
+    return () => {
+      cancelled = true;
+      if (widgetId !== undefined) {
+        try {
+          window.turnstile?.remove(widgetId);
+        } catch {
+          // already torn down (e.g. by navigation)
+        }
+      }
+    };
+  });
 
   const inputClass =
     "flex-1 bg-white text-dark text-base placeholder:text-[#70A19E] placeholder:opacity-60 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider rounded-sm p-4 outline-none focus:ring-2 focus:ring-light";
@@ -97,6 +130,12 @@
           rows="6"
           class={textareaClass}
         ></textarea>
+
+        {#if turnstileSiteKey}
+          <!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
+               injects a hidden cf-turnstile-response input that createIngestAction forwards. -->
+          <div class="cf-turnstile" bind:this={turnstileEl}></div>
+        {/if}
 
         <div>
           <DefaultButton disabled={submitting}>
