@@ -31,7 +31,7 @@
     "jsdom": "^28.1.0",
     "prettier": "^3.1.1",
     "prettier-plugin-svelte": "^3.2.6",
-    "sharp": "^0.33.5",
+    "sharp": "^0.35.0",
     "slice-machine-ui": "^2.11.1",
     "svelte": "^5.23.0",
     "svelte-check": "^4.0.0",
@@ -45,7 +45,7 @@
   "dependencies": {
     "@prismicio/client": "^7.3.1",
     "@prismicio/svelte": "^2.0.0",
-    "@reddoorla/maintenance": "^0.67.0",
+    "@reddoorla/maintenance": "^0.74.0",
     "@tailwindcss/vite": "^4.1.4",
     "@zerodevx/svelte-img": "^2.1.2",
     "flatpickr": "^4.6.13",
