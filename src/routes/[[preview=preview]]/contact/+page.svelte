@@ -128,8 +128,7 @@
           placeholder="Comments or Questions"
           aria-label="Comments or Questions"
           rows="6"
-          class={textareaClass}
-        ></textarea>
+          class={textareaClass}></textarea>
 
         {#if turnstileSiteKey}
           <!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
