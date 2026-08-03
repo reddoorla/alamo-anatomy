@@ -194,8 +194,7 @@
             aria-label="Description of Event"
             required
             rows="6"
-            class={textareaClass}
-          ></textarea>
+            class={textareaClass}></textarea>
         </fieldset>
 
         <!-- Lab Equipment -->
@@ -243,8 +242,7 @@
             aria-label="Description of Procedure"
             required
             rows="6"
-            class={textareaClass}
-          ></textarea>
+            class={textareaClass}></textarea>
         </fieldset>
 
         <!-- Catering -->
@@ -266,15 +264,13 @@
             placeholder="Additional Catering Info"
             aria-label="Additional Catering Info"
             rows="5"
-            class={textareaClass}
-          ></textarea>
+            class={textareaClass}></textarea>
           <textarea
             name="diet_accommodations"
             placeholder="Diet Accommodation Requests"
             aria-label="Diet Accommodation Requests"
             rows="5"
-            class={textareaClass}
-          ></textarea>
+            class={textareaClass}></textarea>
         </fieldset>
 
         <!-- Lab Requestor Information -->
