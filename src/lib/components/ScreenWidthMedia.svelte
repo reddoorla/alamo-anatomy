@@ -2,6 +2,7 @@
   import { PrismicImage } from "@prismicio/svelte";
   import Img from "@zerodevx/svelte-img";
   import { onMount } from "svelte";
+  import { cappedWidths } from "@reddoorla/maintenance/images";
 
   let {
     src = "",
@@ -82,7 +83,15 @@
         class="absolute bottom-0 left-0 h-full w-full object-cover {passedClasses} -z-10"
       />
     {:else if field}
-      <PrismicImage {field} class="absolute h-full w-full object-cover -z-10 {passedClasses}" />
+      <!-- Full-bleed backdrop: genuinely 100vw, and usually the LCP element, so
+           it stays eager and gets fetch priority. -->
+      <PrismicImage
+        {field}
+        widths={cappedWidths(field)}
+        sizes="100vw"
+        fetchpriority="high"
+        class="absolute h-full w-full object-cover -z-10 {passedClasses}"
+      />
     {/if}
 
     {#if vimeoId && !videoError}
