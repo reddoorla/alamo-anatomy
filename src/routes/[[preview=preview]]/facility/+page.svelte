@@ -4,6 +4,7 @@
   import ScreenWidthMedia from "$lib/components/ScreenWidthMedia.svelte";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
+  import { cappedWidths } from "@reddoorla/maintenance/images";
 
   let { data } = $props();
   const d = $derived(data.page.data);
@@ -58,6 +59,8 @@
           {#each images as img, i (i)}
             <PrismicImage
               field={img.image}
+              widths={cappedWidths(img.image)}
+              sizes="(min-width: 1024px) 54vw, 92vw"
               class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out {activeIndex ===
               i
                 ? 'opacity-100'
@@ -99,7 +102,13 @@
                   ? 'border-dark saturate-100'
                   : 'border-transparent saturate-50 opacity-80 hover:saturate-100 hover:opacity-100'}"
               >
-                <PrismicImage field={img.image} class="w-full h-full object-cover" />
+                <PrismicImage
+                  field={img.image}
+                  widths={cappedWidths(img.image, [100, 200, 300])}
+                  sizes="100px"
+                  loading="lazy"
+                  class="w-full h-full object-cover"
+                />
               </button>
             {/each}
           </div>
@@ -149,7 +158,13 @@
           class="flex flex-col items-center justify-center text-center gap-3 bg-light px-5 py-8 min-h-28 sm:py-10 sm:min-h-32 lg:min-h-40"
         >
           {#if box.icon?.url}
-            <PrismicImage field={box.icon} class="w-20 h-20 object-contain" />
+            <PrismicImage
+              field={box.icon}
+              widths={cappedWidths(box.icon, [80, 160, 240])}
+              sizes="80px"
+              loading="lazy"
+              class="w-20 h-20 object-contain"
+            />
           {/if}
           <h5>{box.label}</h5>
         </div>

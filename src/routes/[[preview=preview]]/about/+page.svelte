@@ -4,6 +4,7 @@
   import ScreenWidthMedia from "$lib/components/ScreenWidthMedia.svelte";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";
+  import { cappedWidths } from "@reddoorla/maintenance/images";
 
   let { data } = $props();
   const d = $derived(data.page.data);
@@ -49,7 +50,13 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full lg:w-7/12">
       {#each d.s4_boxes as box, i (i)}
         <div class="flex flex-col items-center justify-center text-center gap-3 bg-light px-4 py-8">
-          <PrismicImage field={box.icon} class="w-20 h-20 object-contain" />
+          <PrismicImage
+            field={box.icon}
+            widths={cappedWidths(box.icon, [80, 160, 240])}
+            sizes="80px"
+            loading="lazy"
+            class="w-20 h-20 object-contain"
+          />
           <h5>{box.label}</h5>
         </div>
       {/each}
@@ -66,14 +73,26 @@
     class="flex flex-col md:flex-row gap-12 md:gap-10 lg:gap-20 items-start justify-between"
   >
     <div class="w-full md:w-1/2 lg:w-7/12">
-      <PrismicImage field={d.s5_image} class="w-full object-cover rounded aspect-4/3" />
+      <PrismicImage
+        field={d.s5_image}
+        widths={cappedWidths(d.s5_image)}
+        sizes="(min-width: 1024px) 54vw, (min-width: 768px) 46vw, 92vw"
+        loading="lazy"
+        class="w-full object-cover rounded aspect-4/3"
+      />
     </div>
     <div class="w-full md:w-1/2 lg:w-1/3">
       {#if d.s5_eyebrow}
         <h4 class="mb-6">{d.s5_eyebrow}</h4>
       {/if}
       {#if d.s5_logo?.url}
-        <PrismicImage field={d.s5_logo} class="h-24 w-auto object-contain mb-6" />
+        <PrismicImage
+          field={d.s5_logo}
+          widths={cappedWidths(d.s5_logo, [160, 320, 480])}
+          sizes="220px"
+          loading="lazy"
+          class="h-24 w-auto object-contain mb-6"
+        />
       {/if}
       <div class="mb-8">
         <PrismicRichText field={d.s5_body} />

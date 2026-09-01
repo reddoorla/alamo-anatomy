@@ -6,6 +6,7 @@
   import DefaultButton from "$lib/components/DefaultButton.svelte";
   import logo from "$lib/assets/images/logos/typeLight.svg";
   import mark from "$lib/assets/images/logos/mark.svg";
+  import { cappedWidths } from "@reddoorla/maintenance/images";
 
   let { data } = $props();
   const d = $derived(data.page.data);
@@ -51,7 +52,13 @@
         <div
           class="flex flex-col items-center justify-center text-center gap-3 bg-light px-5 xl:px-7 py-10"
         >
-          <PrismicImage field={box.icon} class="w-24 h-24" />
+          <PrismicImage
+            field={box.icon}
+            widths={cappedWidths(box.icon, [96, 192, 288])}
+            sizes="96px"
+            loading="lazy"
+            class="w-24 h-24"
+          />
           <h4>{box.label}</h4>
         </div>
       {/each}
@@ -65,7 +72,13 @@
 <!-- Mobile-only sticky image -->
 <section class="lg:hidden">
   <ContentWidth>
-    <PrismicImage field={d.s4_s6_sticky_image} class="w-full object-cover rounded aspect-3/4" />
+    <PrismicImage
+      field={d.s4_s6_sticky_image}
+      widths={cappedWidths(d.s4_s6_sticky_image)}
+      sizes="92vw"
+      loading="lazy"
+      class="w-full object-cover rounded aspect-3/4"
+    />
   </ContentWidth>
 </section>
 
@@ -75,7 +88,13 @@
   <div class="hidden lg:block absolute inset-0 overflow-visible pointer-events-none">
     <ContentWidth class="h-full items-end justify-start pb-20">
       <div class="sticky top-24 w-1/3 pointer-events-auto ml-auto">
-        <PrismicImage field={d.s4_s6_sticky_image} class="w-full object-cover rounded aspect-3/4" />
+        <PrismicImage
+          field={d.s4_s6_sticky_image}
+          widths={cappedWidths(d.s4_s6_sticky_image)}
+          sizes="(min-width: 1024px) 30vw, 92vw"
+          loading="lazy"
+          class="w-full object-cover rounded aspect-3/4"
+        />
       </div>
     </ContentWidth>
   </div>
@@ -129,7 +148,13 @@
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-8 w-full">
           {#each d.s6_boxes as box, i (i)}
             <div class="flex flex-col items-center text-center gap-3">
-              <PrismicImage field={box.icon} class="w-12 h-12 object-contain" />
+              <PrismicImage
+                field={box.icon}
+                widths={cappedWidths(box.icon, [48, 96, 144])}
+                sizes="48px"
+                loading="lazy"
+                class="w-12 h-12 object-contain"
+              />
               <h5>{box.label}</h5>
             </div>
           {/each}
