@@ -51,5 +51,5 @@
     "flatpickr": "^4.6.13",
     "svelte-gestures": "^5.0.7"
   },
-  "packageManager": "pnpm@11.8.0"
+  "packageManager": "pnpm@11.11.0"
 }
