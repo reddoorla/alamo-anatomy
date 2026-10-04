@@ -61,3 +61,55 @@ workflow at v1.4.1, and locally the checks are still separate (`pnpm lint`,
 
 **What changed today.** This repo had no `CLAUDE.md`, so one was created — a
 short orientation plus the journal convention — and this file exists.
+
+## 2026-10-04 — Off Slice Machine, onto the Prismic CLI, with no slices to move (reddoor-maintenance#1090, `claude/prismic-cli`)
+
+Phase 4 of the fleet migration (reddoor-maintenance
+`docs/prismic-migration-plan-2026-10.md`), following espada#79. Slice Machine
+is deprecated by Prismic since 2026-09-18; models are now edited in the Type
+Builder, and the generated files come from `pnpm prismic:gen`.
+
+**This was the outlier: a slice library that did not exist.**
+`slicemachine.config.json` named `libraries: ["./src/lib/slices"]`, there was
+no such directory, and `/slice-simulator` rendered `<SliceZone {slices} />`
+with no components. The question was the smallest correct shape, and the CLI
+answered it. Run against the missing directory, `prismic gen types` and
+`prismic gen slice-index` both exit 0, and slice-index _creates_
+`src/lib/slices/index.ts` with an empty `components` map. `libraries: []` is
+accepted by the config schema, and so is omitting the key, but neither means
+"no library": the CLI's `getSliceLibraries()` treats an empty or absent list
+as "use the default", which for SvelteKit is `src/lib/slices/`. All three
+configs produced byte-identical types and index files. A
+`"libraries": "nope"` config is rejected ("prismic.config.json is invalid"),
+so the schema is really being checked. No config stops slice-index writing an
+index, so the library stays explicit, the empty index is committed, the
+simulator imports `components` from it, and `prismic-codegen` checks both
+files like every other site. The alternative, a types-only `prismic:gen` and
+gate, would diverge from the fleet in three places and would go stale silently
+on the first slice: a temporary slice model made the gate rewrite the index
+(`mutation_probe: MutationProbe`), which a types-only gate would not have
+compared.
+
+**Types moved to the project root.** Without the `src/app.d.ts` import,
+svelte-check went from 0 errors (origin/main, 584 files) to 1
+(`[uid]/+page.server.ts`: `uid: string | null` is not `string`, because the
+untyped client loses the `page` model). With it, 0 errors. The regenerated
+file exports the same 12 type names and the same 90 API ID paths as the
+Slice Machine file.
+
+**No framing change.** The site does not opt into the central CSP, has no
+`hooks.server`, and `netlify.toml` sets only Cache-Control.
+`/slice-simulator` is prerendered. On vite preview (origin/main and the
+branch), `/`, `/slice-simulator`, `/contact`, `/health` and `/about` send
+neither X-Frame-Options nor a CSP; so does alamo-anatomy.netlify.app for `/`,
+`/slice-simulator`, `/about`, `/contact` and `/health` (read 22:05Z). The same
+header grep found both headers on prismic.io and google.com, so the absence is
+a reading, not a blind spot.
+
+**In sync with Prismic, proven through the connector.** Alamo is `launching`,
+so the nightly drift sweep skips it and the 2026-10-04 log has no line for it.
+A read-only comparison of the six local custom types against
+`get_custom_type` found no differences across 82 top-level fields (tabs, field
+keys, type, config). The same script, run first on a copy with a changed
+placeholder, an added field and an added slice-zone choice, reported all three.
+`list_shared_slices` is empty, and so is the local library.
