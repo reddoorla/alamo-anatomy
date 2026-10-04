@@ -113,3 +113,13 @@ A read-only comparison of the six local custom types against
 keys, type, config). The same script, run first on a copy with a changed
 placeholder, an added field and an added slice-zone choice, reported all three.
 `list_shared_slices` is empty, and so is the local library.
+
+## 2026-10-04 — The slice simulator leaves every Prismic page's bundle (branch `fix/simulator-chunk-and-encoded-framing`)
+
+Ported from reddoor-starter#168, following caltex-landing#70 and revogen#91; the reasoning and the fixes that failed are recorded in the starter. The question first was whether an empty slice library leaves anything to fix. It does. Six routes and `ScreenWidthMedia` import `PrismicImage`, `PrismicRichText` or `SliceZone` from the `@prismicio/svelte` barrel, and `/slice-simulator` imports `SliceSimulator` from the same barrel. The barrel statically re-exports the simulator, so Rolldown put `@prismicio/simulator` into a chunk shared with the public pages, and every route under `[[preview=preview]]` preloaded it. `scripts/prismic-barrel.ts` declares that one re-export-only module side-effect-free, and Rolldown then binds each import to its own module.
+
+Measured from the build manifest as each node's static-import closure, gzipped, before → after: home 39,299 → 34,588, `[uid]` 32,290 → 24,066, `about` 37,390 → 32,680, `contact` 50,196 → 45,432, `facility` 38,481 → 33,771 and `reserve` 65,861 → 61,098. Before, all six reached the simulator chunk. After, only `/slice-simulator` does (32,343 → 28,671), and it carries the code in its own node. The root layout (43,583 → 43,586) and `/thank-you` never reached it.
+
+There is no framing change. The site has no `hooks.server` and sets no X-Frame-Options or CSP anywhere, and `vite preview` showed neither header on any path before or after, including `/slice%2Dsimulator`.
+
+The proof is `tests/smoke/slice-simulator.spec.ts`, which reads the build manifest from disk. It sits in Playwright rather than vitest because this repo's vitest only collects `src/**`. On `main` it failed the bundle check (1 of 3). On this branch it passes 3 of 3. With the plugin removed from `vite.config.js` and the site rebuilt, the bundle check fails again. The plugin is imported without an extension because `svelte-check` runs `checkJs` here.
