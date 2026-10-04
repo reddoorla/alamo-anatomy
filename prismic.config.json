@@ -1,0 +1,5 @@
+{
+  "repositoryName": "alamo-anatomy",
+  "libraries": ["./src/lib/slices"],
+  "routes": []
+}
