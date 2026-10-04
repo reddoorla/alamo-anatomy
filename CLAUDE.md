@@ -7,7 +7,8 @@ early fork of the Reddoor starter.
 
 What an agent working here needs to know that the code does not say loudly:
 
-- **There is no slice library.** `src/lib/slices` does not exist. Content is
+- **There are no slices.** `src/lib/slices` holds only the generated, empty
+  index (below). Content is
   five single-instance Prismic custom types — `home`, `about`, `facility`,
   `reserve`, `contact` — each with numbered section fields (`s1_eyebrow`,
   `s1_heading`, …), plus a repeatable `page` type nothing currently uses. Do
@@ -23,8 +24,21 @@ What an agent working here needs to know that the code does not say loudly:
   `createIngestAction` from `@reddoorla/maintenance/forms`. It needs
   `FORMS_INGEST_URL` and `FORMS_INGEST_TOKEN` in Netlify's env — never commit
   the real URL, as Netlify's secrets scanner fails the build on it.
-- **`src/prismicio-types.d.ts` is generated** by Slice Machine (`pnpm dev` runs
-  it alongside Vite). Hand edits do not survive.
+- **`prismicio-types.d.ts` and `src/lib/slices/index.ts` are generated** by
+  the Prismic CLI (`pnpm prismic:gen`; Slice Machine is gone, deprecated by
+  Prismic 2026-09-18). Hand edits do not survive. Edit a model's JSON,
+  regenerate, commit both; the `prismic-codegen` job fails a PR whose generated
+  files are stale. Both are in `.prettierignore`. The types file sits at the
+  project root, outside SvelteKit's `src/**` include, so `src/app.d.ts` imports
+  it. `src/lib/slices/` holds only that index, whose `components` map is empty
+  because there are no slices; the CLI writes it whatever `libraries` says
+  (`[]` and an omitted key fall back to the same default path), and
+  `/slice-simulator` imports it so a first slice renders there without touching
+  the route. Run by an agent, the CLI refuses without `--task-id` and
+  `--user-intent`, so an agent runs `pnpm exec prismic task-id` once, then
+  `pnpm exec prismic gen types --task-id <id> --user-intent "<the ask>"` and the
+  same for `gen slice-index`. Never `prismic push` or `prismic pull`: both
+  delete to match.
 
 ## The work journal
 
