@@ -1,4 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 // robots.txt and sitemap.xml are prerendered, so kit 3 hands them its
 // placeholder origin, "http://sveltekit-prerender" (paths.origin is not set:
@@ -42,5 +44,18 @@ describe("prerendered while the build had a production URL", () => {
     const xml = await res.text();
     expect(xml).toContain("<loc>https://www.example.com/facility</loc>");
     expect(xml).not.toContain(PLACEHOLDER);
+  });
+});
+
+describe("the root layout writes absolute URLs through $lib/site-origin", () => {
+  const layout = readFileSync(join(process.cwd(), "src/routes/+layout.svelte"), "utf8");
+
+  it("reads neither page.url.origin nor page.url.href, which are the placeholder on a prerendered page", () => {
+    expect(layout).not.toMatch(/page\.url\.(origin|href)\b/);
+  });
+
+  it("derives its origin and href from siteOrigin and siteHref", () => {
+    expect(layout).toMatch(/siteOrigin\(page\.url\)/);
+    expect(layout).toMatch(/siteHref\(page\.url\)/);
   });
 });

@@ -20,6 +20,6 @@
       }
     ]
   }
-  // Path aliases are handled by `alias` in sveltekit.config.js (deprecated in
-  // kit 3 in favour of package.json subpath imports).
+  // `$lib` resolves through the `alias` that createKitConfig injects into
+  // sveltekit.config.js (deprecated in kit 3 in favour of subpath imports).
 }
