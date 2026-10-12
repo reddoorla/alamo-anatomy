@@ -2,7 +2,7 @@
 
 The website for the **Alamo Anatomy Training Institute** (AATI) — an anatomy
 training facility whose lab visitors book through the `/reserve` form.
-SvelteKit 2 / Svelte 5 / Tailwind v4 / Prismic, deployed on Netlify, from an
+SvelteKit 3 / Svelte 5 / Tailwind v4 / Prismic, deployed on Netlify, from an
 early fork of the Reddoor starter.
 
 What an agent working here needs to know that the code does not say loudly:
@@ -17,6 +17,19 @@ What an agent working here needs to know that the code does not say loudly:
   the checks are separate: `pnpm lint`, `pnpm check`, `pnpm test`,
   `pnpm test:smoke`. CI is the reusable `reddoorla/.github` workflow (v1.4.1),
   which runs on pushes to `main` and `staging` and on every PR.
+- **Kit 3 exposes only the environment variables `src/env.ts` declares.** An
+  undeclared read through `$app/env/private` or `$app/env/public` is silently
+  `undefined`, with only a build warning, so a form stops delivering and
+  nothing fails. `scripts/kit-config.test.ts` (part of `pnpm test`) fails on a
+  read that is not declared. The config is `sveltekit.config.js`, passed to
+  `sveltekit()` in `vite.config.js`; kit 3 refuses a `svelte.config.js`.
+- **Never set `paths.origin`.** Kit 3 makes it the only origin a form POST is
+  accepted from, so `/contact` and `/reserve` would answer 403 on every other
+  host. Prerendered pages see kit's `http://sveltekit-prerender` placeholder
+  instead, and anything that writes an absolute URL into one (canonical,
+  og:url, og:image, the JSON-LD, robots.txt, sitemap.xml) goes through
+  `siteOrigin`/`siteHref` in `$lib/site-origin`, which swap in Netlify's `URL`
+  from the build.
 - **The root layout sets `prerender = "auto"`, and a form action cannot run on
   a prerendered route.** `/contact` and `/reserve` therefore set
   `prerender = false` themselves. Any new route with an action must do the same.
