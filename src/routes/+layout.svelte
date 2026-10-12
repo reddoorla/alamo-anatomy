@@ -3,6 +3,7 @@
   import { page } from "$app/state";
   import { afterNavigate } from "$app/navigation";
   import { repositoryName } from "$lib/prismicio";
+  import { siteHref, siteOrigin } from "$lib/site-origin";
   import "../app.css";
   import LandscapeModal from "$lib/components/LandscapeModal.svelte";
   import TransitionOverlay from "$lib/components/TransitionOverlay.svelte";
@@ -10,6 +11,11 @@
   import Footer from "$lib/components/Footer.svelte";
 
   let { children, data } = $props();
+
+  // Prerendered pages see kit 3's placeholder origin; siteOrigin swaps in the
+  // production URL the build was given.
+  const origin = $derived(siteOrigin(page.url));
+  const href = $derived(siteHref(page.url));
 
   const isPreviewOrDev = $derived(import.meta.env.DEV || page.url.pathname.startsWith("/preview"));
 
@@ -30,7 +36,7 @@
       "@type": "MedicalBusiness",
       name: "Alamo Anatomy Training Institute",
       alternateName: "AATI",
-      url: page.url.origin,
+      url: origin,
       telephone: "+1-210-488-4001",
       address: {
         "@type": "PostalAddress",
@@ -47,8 +53,8 @@
 
 <svelte:head>
   <title>{page.data.title ?? "Alamo Anatomy Training Institute"}</title>
-  <link rel="canonical" href={page.url.href} />
-  <meta property="og:url" content={page.url.href} />
+  <link rel="canonical" {href} />
+  <meta property="og:url" content={href} />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Alamo Anatomy Training Institute" />
   {#if page.data.meta_description}
@@ -59,12 +65,9 @@
     <meta property="og:title" content={page.data.meta_title} />
     <meta name="twitter:title" content={page.data.meta_title} />
   {/if}
-  <meta property="og:image" content={page.data.meta_image ?? `${page.url.origin}/og-default.png`} />
+  <meta property="og:image" content={page.data.meta_image ?? `${origin}/og-default.png`} />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta
-    name="twitter:image"
-    content={page.data.meta_image ?? `${page.url.origin}/og-default.png`}
-  />
+  <meta name="twitter:image" content={page.data.meta_image ?? `${origin}/og-default.png`} />
 
   <!-- JSON-LD: Local Business (tag tokens split so the Svelte parser doesn't enter script mode) -->
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->

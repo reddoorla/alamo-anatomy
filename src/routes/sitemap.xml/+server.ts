@@ -1,4 +1,5 @@
 import { createClient } from "$lib/prismicio";
+import { siteOrigin } from "$lib/site-origin";
 
 export const prerender = true;
 
@@ -44,7 +45,7 @@ export async function GET({ url, fetch }) {
 ${entries
   .map(
     ({ path, lastmod }) => `	<url>
-		<loc>${url.origin}${path}</loc>${lastmod ? `\n\t\t<lastmod>${lastmod}</lastmod>` : ""}
+		<loc>${siteOrigin(url)}${path}</loc>${lastmod ? `\n\t\t<lastmod>${lastmod}</lastmod>` : ""}
 		<changefreq>monthly</changefreq>
 	</url>`,
   )
