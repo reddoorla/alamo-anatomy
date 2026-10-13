@@ -20,8 +20,8 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
-    "@sveltejs/adapter-netlify": "^6.0.4",
-    "@sveltejs/kit": "^2.5.27",
+    "@sveltejs/adapter-netlify": "^7.0.1",
+    "@sveltejs/kit": "^3.0.1",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@testing-library/svelte": "^5.3.1",
     "@types/node": "^25.7.0",
@@ -31,7 +31,7 @@
     "prettier-plugin-svelte": "^4.0.0",
     "prismic": "^1.22.0",
     "sharp": "^0.35.0",
-    "svelte": "^5.23.0",
+    "svelte": "^5.57.1",
     "svelte-check": "^4.0.0",
     "tailwindcss": "^4.0.14",
     "typescript": "^6.0.0",
@@ -43,7 +43,7 @@
   "dependencies": {
     "@prismicio/client": "^7.3.1",
     "@prismicio/svelte": "^2.2.1",
-    "@reddoorla/maintenance": "^0.90.0",
+    "@reddoorla/maintenance": "^0.107.0",
     "@tailwindcss/vite": "^4.1.4",
     "@zerodevx/svelte-img": "^2.1.2",
     "flatpickr": "^4.6.13",

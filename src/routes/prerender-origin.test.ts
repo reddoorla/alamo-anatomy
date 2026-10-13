@@ -1,0 +1,61 @@
+import { describe, it, expect, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+// robots.txt and sitemap.xml are prerendered, so kit 3 hands them its
+// placeholder origin, "http://sveltekit-prerender" (paths.origin is not set:
+// sveltekit.config.js says why). Each must take $lib/site-origin's siteOrigin,
+// which puts the build's production URL in its place. Kit 2 took that from
+// prerender.origin, so these routes read url.origin directly. In vitest the
+// build has no URL, so the build origin is fixed here through the mock.
+vi.mock("$lib/site-origin", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("$lib/site-origin")>();
+  return {
+    ...actual,
+    siteOrigin: (url: Pick<URL, "origin">) => actual.siteOrigin(url, "https://www.example.com"),
+  };
+});
+vi.mock("$lib/prismicio", () => ({
+  createClient: () => ({
+    getSingle: async () => ({ last_publication_date: "2026-09-01T00:00:00Z" }),
+    getAllByType: async () => [],
+  }),
+}));
+
+const robots = await import("./robots.txt/+server");
+const sitemap = await import("./sitemap.xml/+server");
+
+const PLACEHOLDER = "http://sveltekit-prerender";
+
+describe("prerendered while the build had a production URL", () => {
+  it("robots.txt names the production sitemap, not the placeholder", async () => {
+    const res = await (robots.GET as unknown as (e: { url: URL }) => Promise<Response>)({
+      url: new URL(`${PLACEHOLDER}/robots.txt`),
+    });
+    const body = await res.text();
+    expect(body).toContain("Sitemap: https://www.example.com/sitemap.xml");
+    expect(body).not.toContain(PLACEHOLDER);
+  });
+
+  it("sitemap.xml lists production URLs, not the placeholder", async () => {
+    const res = await (
+      sitemap.GET as unknown as (e: { fetch: typeof fetch; url: URL }) => Promise<Response>
+    )({ fetch, url: new URL(`${PLACEHOLDER}/sitemap.xml`) });
+    const xml = await res.text();
+    expect(xml).toContain("<loc>https://www.example.com/facility</loc>");
+    expect(xml).not.toContain(PLACEHOLDER);
+  });
+});
+
+describe("the root layout writes absolute URLs through $lib/site-origin", () => {
+  const layout = readFileSync(join(process.cwd(), "src/routes/+layout.svelte"), "utf8");
+
+  it("reads neither page.url.origin nor page.url.href, which are the placeholder on a prerendered page", () => {
+    expect(layout).not.toMatch(/page\.url\.(origin|href)\b/);
+  });
+
+  it("derives its origin and href from siteOrigin and siteHref", () => {
+    expect(layout).toMatch(/siteOrigin\(page\.url\)/);
+    expect(layout).toMatch(/siteHref\(page\.url\)/);
+  });
+});

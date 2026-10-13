@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PrismicRichText } from "@prismicio/svelte";
   import { enhance } from "$app/forms";
-  import { env } from "$env/dynamic/public";
+  import * as env from "$app/env/public";
   import { loadTurnstile } from "$lib/turnstile";
   import ContentWidth from "$lib/components/ContentWidth.svelte";
   import DefaultButton from "$lib/components/DefaultButton.svelte";

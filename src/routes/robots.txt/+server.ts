@@ -1,10 +1,12 @@
+import { siteOrigin } from "$lib/site-origin";
+
 export const prerender = true;
 
 export async function GET({ url }) {
   const body = `User-agent: *
 Disallow:
 
-Sitemap: ${url.origin}/sitemap.xml
+Sitemap: ${siteOrigin(url)}/sitemap.xml
 `;
 
   return new Response(body, {
