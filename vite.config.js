@@ -17,5 +17,11 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     include: ["src/**/*.test.{js,ts}", "scripts/**/*.test.{js,ts}"],
+    server: {
+      deps: {
+        inline: ["@testing-library/svelte"],
+      },
+    },
   },
+  resolve: process.env.VITEST ? { conditions: ["browser"] } : undefined,
 });
