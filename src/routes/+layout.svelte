@@ -19,10 +19,12 @@
 
   const isPreviewOrDev = $derived(import.meta.env.DEV || page.url.pathname.startsWith("/preview"));
 
+  const unprefixed = (pathname: string) => pathname.replace(/^\/preview/, "") || "/";
+
   // Force instant scroll-to-top on route change (overrides html { scroll-behavior: smooth })
   afterNavigate(({ from, to, type }) => {
     if (type === "popstate") return; // back/forward — let SvelteKit restore
-    if (from?.url.pathname === to?.url.pathname) return; // same page (hash nav etc.)
+    if (from && to && unprefixed(from.url.pathname) === to.url.pathname) return;
     document.documentElement.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
     requestAnimationFrame(() => {
