@@ -1,6 +1,6 @@
 {
-  "format": "page",
   "id": "about",
+  "format": "page",
   "label": "About",
   "repeatable": false,
   "status": true,
