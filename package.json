@@ -42,7 +42,7 @@
   "type": "module",
   "dependencies": {
     "@prismicio/client": "^7.3.1",
-    "@prismicio/svelte": "^2.2.1",
+    "@prismicio/svelte": "^3.0.0",
     "@reddoorla/maintenance": "^0.107.0",
     "@tailwindcss/vite": "^4.1.4",
     "@zerodevx/svelte-img": "^2.1.2",
